@@ -3,11 +3,13 @@ public class Job {
 	/* The Job object keeps track of a job's arrival time, 
 		size, and departure time. */
 
+    private int id;
     private double arrival;
     private double size;
     private double departure;
 
-    public Job(double a, double s) {
+    public Job(int i, double a, double s) {
+        id = i;
         arrival = a;
         size = s;
         departure = a + s;
@@ -22,11 +24,15 @@ public class Job {
     } // getSize
 
     public void setDeparture(double time) {
-        departure = (time - arrival) + size;
+        departure = time;
     } // setDeparture
 
     public double getDeparture() {
         return departure;
+    }
+
+    public int getId() {
+        return id;
     }
 
 } // Job class 

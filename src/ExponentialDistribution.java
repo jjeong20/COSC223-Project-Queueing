@@ -22,4 +22,8 @@ public class ExponentialDistribution {
     public double getVariance() {
         return 1 / lambda / lambda;
     }
+
+    public double fakeGenerate(){
+        return r.nextInt(10);
+    }
 }
