@@ -17,8 +17,8 @@ public class Simulator {
 
         double arrival_time = 0;
         for (int i = 0; i < number_of_jobs; i++) {
-            jobs[i] = new Job(i, arrival_time, service_time.fakeGenerate());
-            arrival_time += interarrival_time.fakeGenerate();
+            jobs[i] = new Job(i, arrival_time, service_time.generate());
+            arrival_time += interarrival_time.generate();
         }
 
         LinkedList<Job> queue = new LinkedList<>();

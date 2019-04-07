@@ -1,64 +1,75 @@
+import java.lang.Math;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.FileWriter;
+
+
 public class Simulator2 {
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
         int number_of_jobs = 1000000;
 
         //repeat with different parameters
 
-        //0.1, 0.2, ...
-        double lambda = 0.5;
+        //parameters to set
+        double l = 0;
 
+        //records mean response times
+        double[][] mrt = new double[4][20];
 
-        double m1 = 0.5;
-        double m2 = 0.5;
-        double p = m1 / (m1 + m2);
+        while (l < 20) {
+            double lambda = (l + 1) * 0.05;
 
-        ExponentialDistribution interarrival_time = new ExponentialDistribution(lambda);
-        //TODO: check equality
-        HyperexponentialDistribution service_time = new HyperexponentialDistribution(m1, m2, p);
+            ExponentialDistribution interarrival_time = new ExponentialDistribution(lambda);
 
-        Job[] jobs = new Job[number_of_jobs];
+            int[] variance = {1, 10, 20, 50};
+            for (int v = 0; v < variance.length; v++) {
 
-        double arrival_time = 0;
-        for (int i = 0; i < number_of_jobs; i++) {
-            jobs[i] = new Job(i, arrival_time, service_time.generate());
-            arrival_time += interarrival_time.generate();
-        }
+                int var = variance[v];
+                //calculate p, m1, m2 based on variance
+                double p = (2 * var + Math.sqrt(4 * var * var - 8 * var)) / 4 / var;
+                double m1 = 2 * p;
+                double m2 = 2 * (1 - p);
+                HyperexponentialDistribution service_time = new HyperexponentialDistribution(m1, m2, p);
 
-        /*
-        System.out.println("Jobs");
-        for (Job j : jobs) {
-            System.out.println("id: " + j.getId() + " arrival: " + j.getArrival() + " size: " + j.getSize());
-        }
-        System.out.println();
-        double cur = 0;
-        double wait = 0;
-        double actualsum = 0;
-        for (Job j : jobs) {
-            if (cur < j.getArrival()) {
-                wait += j.getArrival() - cur;
-                System.out.println("Wait til job " + j.getId());
-                cur = j.getDeparture();
+                Job[] jobs = new Job[number_of_jobs];
+
+                double arrival_time = 0;
+                for (int i = 0; i < number_of_jobs; i++) {
+                    jobs[i] = new Job(i, arrival_time, service_time.generate());
+                    arrival_time += interarrival_time.generate();
+                }
+
+                Job server;
+                double time = 0;
+                double total_response_time = 0;
+
+                for (int i = 0; i < number_of_jobs; i++) {
+                    server = jobs[i];
+                    if (server.getArrival() > time)
+                        time = server.getArrival();
+                    time += server.getSize();
+                    if (i >= 10000)
+                        total_response_time += time - server.getArrival();
+                }
+
+                mrt[v][(int) l] = total_response_time / (number_of_jobs - 10000);
             }
-            actualsum += j.getSize();
-            cur = cur + j.getSize();
+            l += 1;
         }
-        System.out.println(wait);
-        System.out.println(actualsum);
-        System.out.println();
-        */
 
-        Job server;
-        double time = 0;
-        double total_response_time = 0;
+        write("variance_1.csv", mrt[0]);
+        write("variance_10.csv", mrt[1]);
+        write("variance_20.csv", mrt[2]);
+        write("variance_50.csv", mrt[3]);
+    }
 
-        for (int i = 0; i < number_of_jobs; i++) {
-            server = jobs[i];
-            if (server.getArrival() > time)
-                time = server.getArrival();
-            time += server.getSize();
-            if (i >= 10000)
-                total_response_time += time - server.getArrival();
+    private static void write(String filename, double[] x) throws IOException {
+        BufferedWriter outputWriter = null;
+        outputWriter = new BufferedWriter(new FileWriter(filename));
+        for (int i = 0; i < x.length; i++) {
+            outputWriter.write(x[i] + ",");
         }
-        double mean_response_time = total_response_time / (number_of_jobs - 10000);
+        outputWriter.flush();
+        outputWriter.close();
     }
 }
