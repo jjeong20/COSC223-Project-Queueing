@@ -14,12 +14,12 @@ public class Simulator2 {
         double l = 0;
 
         //records mean response times
-        double[][] mrt = new double[4][20];
+        double[][] mrt = new double[4][100];
         int[] variance = {1, 10, 20, 50};
 
-        while (l < 20) { // while loop allows us to easily compute lambda and store mean response times in mrt
-            double lambda = (l + 1) * 0.05; // incrementing lambda by 0.05 each iteration
-
+        while (l < 100) { // while loop allows us to easily compute lambda and store mean response times in mrt
+            double lambda = (l + 1) * 0.01; // incrementing lambda by 0.01 each iteration
+            System.out.println(l);
             ExponentialDistribution interarrival_time = new ExponentialDistribution(lambda);
 
             /* The following for loop computes our parameter values based upon the current variance. 
