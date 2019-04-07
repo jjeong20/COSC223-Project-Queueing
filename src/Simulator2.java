@@ -15,18 +15,29 @@ public class Simulator2 {
 
         //records mean response times
         double[][] mrt = new double[4][20];
+        int[] variance = {1, 10, 20, 50};
 
-        while (l < 20) {
-            double lambda = (l + 1) * 0.05;
+        while (l < 20) { // while loop allows us to easily compute lambda and store mean response times in mrt
+            double lambda = (l + 1) * 0.05; // incrementing lambda by 0.05 each iteration
 
             ExponentialDistribution interarrival_time = new ExponentialDistribution(lambda);
 
-            int[] variance = {1, 10, 20, 50};
+            /* The following for loop computes our parameter values based upon the current variance. 
+            An array of jobs is created. Arrival times are determined by the interarrival_time, which is 
+            drawn from the exponential distribution above. A Job called server is created to keep track of which job
+            is currently in use. The final for loop (line 57) puts a job in the server if the server is not in use. If 
+            the arrival time of that job is greater than the current time, we move forward in time to the job's 
+            arrival time. We then increase the current time by the size of the job in the server. This simulates
+            the runtime of the job while on the server. To compute each job's response time, we subtract its arrival time
+            from the current time, which is when the job finishes. Mean response time for each lambda and variance 
+            pairing is computed by taking the total response time (sum of all job response times) and dividing by 
+            (the number of jobs - 10000). 
+             */ 
             for (int v = 0; v < variance.length; v++) {
 
                 int var = variance[v];
                 //calculate p, m1, m2 based on variance
-                double p = (2 * var + Math.sqrt(4 * var * var - 8 * var)) / 4 / var;
+                double p = (var + Math.sqrt(var * var - 2* var)) / 2 / var;
                 double m1 = 2 * p;
                 double m2 = 2 * (1 - p);
                 HyperexponentialDistribution service_time = new HyperexponentialDistribution(m1, m2, p);
