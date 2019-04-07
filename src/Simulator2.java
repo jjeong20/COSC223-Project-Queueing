@@ -19,7 +19,6 @@ public class Simulator2 {
 
         while (l < 100) { // while loop allows us to easily compute lambda and store mean response times in mrt
             double lambda = (l + 1) * 0.01; // incrementing lambda by 0.01 each iteration
-            System.out.println(l);
             ExponentialDistribution interarrival_time = new ExponentialDistribution(lambda);
 
             /* The following for loop computes our parameter values based upon the current variance. 
