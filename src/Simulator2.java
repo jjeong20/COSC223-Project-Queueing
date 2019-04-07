@@ -37,7 +37,7 @@ public class Simulator2 {
 
                 int var = variance[v];
                 //calculate p, m1, m2 based on variance
-                double p = (var + Math.sqrt(var * var - 2* var)) / 2 / var;
+                double p = (1 + Math.sqrt(1 - 2/(1+var))) / 2;
                 double m1 = 2 * p;
                 double m2 = 2 * (1 - p);
                 HyperexponentialDistribution service_time = new HyperexponentialDistribution(m1, m2, p);
