@@ -23,7 +23,4 @@ public class ExponentialDistribution {
         return 1 / lambda / lambda;
     }
 
-    public double fakeGenerate(){
-        return r.nextInt(10);
-    }
 }

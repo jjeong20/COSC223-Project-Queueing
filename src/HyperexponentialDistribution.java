@@ -34,8 +34,4 @@ public class HyperexponentialDistribution {
     public double getVariance() {
         return getXSquared() - Math.pow(getMean(), 2);
     }
-
-    public double fakeGenerate(){
-        return r.nextInt(20);
-    }
 }
