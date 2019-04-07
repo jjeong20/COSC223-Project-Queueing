@@ -32,12 +32,12 @@ public class Simulator2 {
             from the current time, which is when the job finishes. Mean response time for each lambda and variance 
             pairing is computed by taking the total response time (sum of all job response times) and dividing by 
             (the number of jobs - 10000). 
-             */ 
+             */
             for (int v = 0; v < variance.length; v++) {
 
-                int var = variance[v];
+                double var = variance[v];
                 //calculate p, m1, m2 based on variance
-                double p = (1 + Math.sqrt(1 - 2/(1+var))) / 2;
+                double p = (1 + Math.sqrt(1 - 2 / (1 + var))) / 2;
                 double m1 = 2 * p;
                 double m2 = 2 * (1 - p);
                 HyperexponentialDistribution service_time = new HyperexponentialDistribution(m1, m2, p);
