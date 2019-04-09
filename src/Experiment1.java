@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.FileWriter;
 
 
-public class Simulator2 {
+public class Experiment1 {
     public static void main(String args[]) throws IOException {
         int number_of_jobs = 1000000;
 
@@ -40,7 +40,7 @@ public class Simulator2 {
                 double m1 = 2 * p;
                 double m2 = 2 * (1 - p);
                 HyperexponentialDistribution service_time = new HyperexponentialDistribution(m1, m2, p);
-
+                System.out.println(service_time.getVariance());
                 Job[] jobs = new Job[number_of_jobs];
 
                 double arrival_time = 0;
