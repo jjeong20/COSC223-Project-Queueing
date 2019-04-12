@@ -11,6 +11,7 @@ public class part1 {
         //repeat with different parameters
 
         //parameters to set
+        //l is used to iterate through loop, calculate lambda, and index into the mrt array
         double l = 0;
 
         //records mean response times
@@ -67,12 +68,14 @@ public class part1 {
             l += 1;
         }
 
+        //outputting files
         write("variance_1.csv", mrt[0]);
         write("variance_10.csv", mrt[1]);
         write("variance_20.csv", mrt[2]);
         write("variance_50.csv", mrt[3]);
     }
 
+    //method to output mean response time arrays into files
     private static void write(String filename, double[] x) throws IOException {
         BufferedWriter outputWriter = null;
         outputWriter = new BufferedWriter(new FileWriter(filename));
