@@ -61,7 +61,7 @@ public class Simulator2 {
                     if (i >= 10000)
                         total_response_time += time - server.getArrival();
                 }
-
+                
                 mrt[v][(int) l] = total_response_time / (number_of_jobs - 10000);
             }
             l += 1;
