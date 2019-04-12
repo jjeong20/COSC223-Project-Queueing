@@ -2,7 +2,7 @@ Main Files
 
     Experiment1.java and Experiment2.java are the only files with the main method.
 
-    Experiment1.java does not require any command line parameters so it can simply be run.
+    part1.java does not require any command line parameters so it can simply be run.
     It does the following things:
         1. Set lambda = 0.01. Create an ExponentialDistribution object called interarrival_time with parameter lambda.
         2. For each variance value in [1, 10, 20, 50], calculate the parameters p, m1, m2 and create an
@@ -15,7 +15,7 @@ Main Files
         6. Output the arrays with mean response times as a csv file - these were then used in an excel file to graph
         mean response times versus lambda.
 
-    Experiment2.java does not require any command line parameters so it can simply be run.
+    part2.java does not require any command line parameters so it can simply be run.
     It does the following things:
         1. Create an ExponentialDistribution object called service_time with parameter 1.
         2. Set lambda = 1.01; this value is to be the expected value of the interarrival time distribution.
